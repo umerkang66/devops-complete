@@ -1,0 +1,33 @@
+RUN ANY IMAGE
+docker run <image name>
+
+When we run the image, there is always default command, that runs after the container is created, we can override that default command
+
+docker run <image name> <overriding command>
+
+SEE THE RUNNING CONTAINERS
+docker ps
+SEE THE STOPPED CONTAINERS
+docker ps --all
+
+Docker run is actually combination of two commands:
+1) docker create 
+2) docker start [-a]
+
+Creating the container and starting the container are two different things, "-a" means watch the output from the container and print out in the terminal
+
+DELETE EVERYTHING DOCKER RELATED
+docker system prune -a
+
+RETRIEVE THE LOGS FROM CONTAINER
+docker logs <container id>
+
+STOP THE RUNNING CONTAINER
+docker stop <container id> (wait for some time for cleanup, sends SIGTERM SIGNAL) (if the time is more than 10 seconds, docker kill command will be issued)
+docker kill <container id> (abruptly stops the container, sends SIGTKILL SIGNAL)
+
+START ANOTHER PROGRAM INSIDE THE RUNNING CONTAINER
+docker exec -it <running container id> [command]
+e.g. docker exec -it 56bf961337cd redis-cli
+
+-it: Start the program in interactive mode (we can enter text)
