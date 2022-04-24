@@ -24,10 +24,17 @@ docker logs <container id>
 
 STOP THE RUNNING CONTAINER
 docker stop <container id> (wait for some time for cleanup, sends SIGTERM SIGNAL) (if the time is more than 10 seconds, docker kill command will be issued)
-docker kill <container id> (abruptly stops the container, sends SIGTKILL SIGNAL)
+docker kill <container id> (abruptly stops the container, sends SIGKILL SIGNAL)
 
 START ANOTHER PROGRAM INSIDE THE RUNNING CONTAINER
 docker exec -it <running container id> [command]
-e.g. docker exec -it 56bf961337cd redis-cli
+e.g. docker exec -it <container id> <command>
+e.g. docker exec -it 22e5dff10dd2 redis-cli
 
--it: Start the program in interactive mode (we can enter text)
+-it: Start the program in interactive mode (we can enter text), it consist of the two commands, -i, -t, "-i" means to attach to STDIN of the command, "-t" just makes our text look pretty
+
+OPEN UP SHELL IN THE CONTEXT OF TERMINAL
+docker exec -it <container id> sh
+
+WE CAN ALSO OPEN UP THE SHELL WHEN STARTING THE CONTAINER (PREVIOUSLY WE WERE DOING AFTER STARTING THE CONTAINER: BY USING CONTAINER ID)
+docker run -it <image name> <command>
