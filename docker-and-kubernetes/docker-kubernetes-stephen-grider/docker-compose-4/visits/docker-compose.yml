@@ -1,0 +1,16 @@
+# version of docker-compose we are using
+version: '3'
+# services in the docker world are containers
+services:
+    # name of the container
+    redis-server:
+        image: 'redis'
+    node-app:
+        # only on node-app: check the notes: restart policies
+        restart: on-failure
+        # there is not an image, so build one, from the Dockerfile in "."
+        build: .
+        # access the node:app container to the outside world (localhost)
+        ports:
+            - '8081:8081'
+# If we didn't specify the network, docker-compose, will create both these containers on the same network

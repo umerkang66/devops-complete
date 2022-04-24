@@ -1,0 +1,22 @@
+RUN THE DOCKER COMPOSE FILE
+docker-compose up
+
+RUN THE DOCKER COMPOSE FILE AND REBUILD ALL THE IMAGES
+docker-compose up --build
+
+START THE GROUP OF CONTAINERS IN BACKGROUND
+"-d" MEANS DETACHED MODE
+docker-compose up -d
+
+STOP THE GROUP OF CONTAINERS IN BACKGROUND
+docker-compose down
+
+
+RESTART POLICIES
+1) "no": always in "quotes" because in yml files, raw no is interpreted as "false"
+2) always
+3) on-failure: only restart if container stopped with error code
+4) unless-stopped: always restart unless we (the developers) forcibly stop it
+
+SEE THE DOCKER COMPOSE CONTAINERS STATUS
+docker-compose ps
