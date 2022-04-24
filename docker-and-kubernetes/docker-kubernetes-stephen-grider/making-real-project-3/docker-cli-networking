@@ -1,0 +1,4 @@
+EXPOSE THE PORT TO OUTSIDE WORLD
+
+docker run -p <outside port>:<inside container port> <image name>
+e.g. docker run -p 8080:8080 ugulzar4512/simpleweb
