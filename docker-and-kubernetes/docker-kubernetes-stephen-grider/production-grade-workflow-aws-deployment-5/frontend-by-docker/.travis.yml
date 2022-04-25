@@ -1,0 +1,30 @@
+# have super user permissions
+sudo: required
+# make sure docker is installed
+services:
+    - docker
+
+# series of steps before our tests or deployment
+before_install:
+    - docker build -t ugulzar4512/docker-react -f Dockerfile.dev .
+
+# actually run our test suite
+script:
+    # in each of these command, if travis get status code other than 0, travis will fail the test, and stop the aws deployment
+
+    # CI env is true, jest will not hang, but exit after the tests are run
+    - docker run -e CI=true ugulzar4512/docker-react npm run test
+
+deploy:
+    # elasticbeanstalk is pre configured
+    provider: elasticbeanstalk
+    region: 'ap-south-1'
+    app: 'docker-react'
+    env: 'Dockerreact-env'
+    bucket_name: 'elasticbeanstalk-ap-south-1-076745903733'
+    bucket_path: 'docker-react'
+    on:
+        # only deploy when there is a change in master branch
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
