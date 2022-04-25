@@ -1,0 +1,10 @@
+ATTACH THE RUNNING CONTAINER TO TERMINAL: ADD STDIN, STDOUT, STDERR
+
+docker attach <docker id>
+
+
+
+WE CAN ALSO OPEN THE SHELL IN THE CONTAINER AND RUN ALL THE TEST THERE
+
+docker exec -it <container id> sh
+/app # npm run test

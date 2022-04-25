@@ -1,0 +1,8 @@
+FROM node:alpine
+WORKDIR /app
+COPY package.json .
+RUN npm install
+# we don't copy, because we are mapping the outside file system in the container
+COPY . .
+EXPOSE 3000
+CMD [ "npm", "start" ]

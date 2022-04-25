@@ -1,0 +1,24 @@
+version: '3'
+services:
+    react-app:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            - '3000:3000'
+        volumes:
+            # preserves the node_modules inside the container (don't map node modules outside in the file system)
+            - /app/node_modules
+            # map everything to the outside file system instead node_modules (upper command)
+            - .:/app
+    # seperate container for react-testing
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        # no need of ports in testing environment
+        volumes:
+            - /app/node_modules
+            - .:/app
+        # override the default command
+        command: ['npm', 'run', 'test'] # not an array

@@ -17,3 +17,7 @@ CHANGE THE CONTAINER AFTER ENTERING IN THE SHELL STATE OF CONTAINER THEN CREATE 
 
 docker commit -c 'CMD ["redis-server"]' 3529a7db837b
 THIS WILL CREATE NEW IMAGE WITH DEFAULT COMMAND "redis-server"
+
+
+DOCKER IMAGES FROM CUSTOM DOCKERFILE (LIKE Dockerfile.dev)
+docker build -f <custom dockerfile name> .
