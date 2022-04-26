@@ -20,6 +20,8 @@ const pgClient = new Pool({
 });
 
 pgClient.on('error', () => console.log('Lost PG connection'));
+pgClient.on('connect', () => console.log('🚀🚀🚀 PG connection'));
+pgClient.on('acquire', () => console.log('🚀🚀🚀 PG connection 2'));
 
 // Create a initial table
 pgClient
@@ -44,7 +46,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/values/all', async (req, res) => {
-    const values = await pgClient.query('SELECT * from values');
+    try {
+        const values = await pgClient.query('SELECT * FROM values');
+        res.send(values.rows);
+    } catch (err) {
+        console.log('🚀🚀🚀', err);
+        res.send([]);
+    }
 
     res.send(values.rows);
 });

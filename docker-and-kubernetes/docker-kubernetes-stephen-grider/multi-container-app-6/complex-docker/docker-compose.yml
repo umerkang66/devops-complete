@@ -3,9 +3,25 @@ services:
     # all the services in the docker-compose will be connected through same network, so we can access the other services using just their name in network access
     postgres:
         image: 'postgres:latest'
+        environment:
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_HOST_AUTH_METHOD=trust
     redis:
         image: 'redis:latest'
-    server:
+    nginx:
+        depends_on:
+            - api
+            - client
+        restart: always
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        # nginx runs on default port 80
+        ports:
+            - '3050:80'
+    api:
+        depends_on:
+            - postgres
         build:
             dockerfile: Dockerfile.dev
             # look for "Dockerfile.dev" in ./server
@@ -36,6 +52,9 @@ services:
         build:
             dockerfile: Dockerfile.dev
             context: ./worker
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
         volumes:
             - /app/node_modules
             - ./worker:/app
