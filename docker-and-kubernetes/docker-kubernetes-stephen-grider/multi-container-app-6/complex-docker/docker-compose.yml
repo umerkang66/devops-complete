@@ -1,0 +1,41 @@
+version: '3'
+services:
+    # all the services in the docker-compose will be connected through same network, so we can access the other services using just their name in network access
+    postgres:
+        image: 'postgres:latest'
+    redis:
+        image: 'redis:latest'
+    server:
+        build:
+            dockerfile: Dockerfile.dev
+            # look for "Dockerfile.dev" in ./server
+            context: ./server
+        volumes:
+            - /app/node_modules
+            - ./server:/app
+            # preserve the n_m in container /app
+            # bind mount the /app (container) to ./server (outside world)
+        # environment variables
+        environment:
+            # only HOSTS are coming from services
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - PG_USER=postgres
+            - PG_HOST=postgres
+            - PG_DATABASE=postgres
+            - PG_PASSWORD=postgres_password
+            - PG_PORT=5432
+    client:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./client
+        volumes:
+            - /app/node_modules
+            - ./client:/app
+    worker:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./worker
+        volumes:
+            - /app/node_modules
+            - ./worker:/app
