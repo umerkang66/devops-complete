@@ -1,0 +1,39 @@
+# travis will pull only the master branch of repository, so if we change the some other branch, the after_success builds will run only on master branch code
+sudo: required
+services:
+    - docker
+
+before_install:
+    # build test-version of our react-project and run test on it
+    - docker build -t ugulzar4512/react-test -f ./client/Dockerfile.dev ./client
+    # if we have some other test, we can add install scripts over here
+
+scripts:
+    - docker run -e CI=true ugulzar4512/react-test npm test
+    # if we have some other test, we can add run scripts over here
+
+after_success:
+    # build production version of our images, and push to docker hub
+    - docker build -t ugulzar4512/multi-client ./client
+    - docker build -t ugulzar4512/multi-nginx ./nginx
+    - docker build -t ugulzar4512/multi-server ./server
+    - docker build -t ugulzar4512/multi-worker ./worker
+    # Login in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Push the images to docker hub
+    - docker push ugulzar4512/multi-client
+    - docker push ugulzar4512/multi-nginx
+    - docker push ugulzar4512/multi-server
+    - docker push ugulzar4512/multi-worker
+# deploy:
+#     provider: elasticbeanstalk
+#     edge: true
+#     region: us-east-1
+#     app: multi-docker
+#     env: MultiDocker-env
+#     bucket_name: bucket_name
+#     bucket_path: docker-multi
+#     on:
+#         branch: master
+#     access_key_id: $AWS_ACCESS_KEY
+#     secret_access_key: $AWS_SECRET_KEY
