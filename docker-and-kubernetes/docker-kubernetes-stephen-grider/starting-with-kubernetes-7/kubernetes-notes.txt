@@ -1,0 +1,25 @@
+PODS: 
+    One or more containers should be created in pod, containers that are tightly coupled
+
+SERVICES: 
+    There are 4 types of services
+    1) ClusterIP
+    2) NodePort
+    3) LoadBalancer
+    4) Ingress
+
+2) NODE_PORT: 
+    Expose a pod to the outside world (only good for dev purposes)
+
+MASTER: 
+    We interact with k8s with master, Master decides where to create the container (in which node). To deploy something, we update the desired state of the master with a config file. The master works constantly to meet your desired state
+
+/////////////////////////
+
+COMMANDS
+1) Feed a config file to kubectl
+kubectl apply -f <filename>
+
+2) Know the status of pods, and services
+kubectl get pods
+kubectl get services
