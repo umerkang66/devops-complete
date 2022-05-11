@@ -10,7 +10,7 @@ spec:
   containers:
     # run one container inside of this pod
     - name: client
-      image: ugulzar4512/multi-client
+      image: 'ugulzar4512/multi-worker'
       # on this container, expose 3000
       # but full networking is set up by client-node-port service
       ports:

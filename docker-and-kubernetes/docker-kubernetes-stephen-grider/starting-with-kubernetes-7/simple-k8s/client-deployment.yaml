@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  # number of different pods that this deployment is supposed to make
+  replicas: 1
+  # after the pod is created, deployment need to handle the pod that is created, so it remembers the pod, using selector (remember deployment doesn't create the pods, its the master that creates the pods)
+  selector:
+    matchLabels:
+      component: web
+  template:
+    # configuration for every single pod that will be created by this deployment
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: 'stephengrider/multi-client'
+          ports:
+            - containerPort: 3000

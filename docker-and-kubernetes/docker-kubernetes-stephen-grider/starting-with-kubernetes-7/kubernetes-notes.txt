@@ -1,5 +1,8 @@
 PODS: 
-    One or more containers should be created in pod, containers that are tightly coupled
+    One or more containers should be created in pod, containers that are tightly coupled. Don't use in production.
+
+DEPLOYMENT: 
+    Maintain a set of identical pods, ensuring that they have the correct config, and that the right number exist. It doesn't create the pods, but it tells master to create the pods, then it manages them.
 
 SERVICES: 
     There are 4 types of services
