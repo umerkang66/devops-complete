@@ -26,3 +26,9 @@ kubectl apply -f <filename>
 2) Know the status of pods, and services
 kubectl get pods
 kubectl get services
+
+3) Update image to the latest version (or any version) in kubernetes deployment, 
+kubectl set image <object_type>/<object_name> <container_name>=<new_image_to_use>
+
+4) Connect local docker-cli with the docker-server that is running inside of any virtual machine (in current terminal window)
+eval $(minikube docker-env)

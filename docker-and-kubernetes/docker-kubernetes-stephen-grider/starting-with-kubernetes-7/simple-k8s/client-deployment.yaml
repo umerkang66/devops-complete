@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
         - name: client
+          # to update the image, manually add the version no. or delete the pods (of deployment), or use the imperative command,
           image: 'stephengrider/multi-client'
           ports:
             - containerPort: 3000
