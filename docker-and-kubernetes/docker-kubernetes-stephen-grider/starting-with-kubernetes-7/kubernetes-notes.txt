@@ -4,6 +4,9 @@ PODS:
 DEPLOYMENT: 
     Maintain a set of identical pods, ensuring that they have the correct config, and that the right number exist. It doesn't create the pods, but it tells master to create the pods, then it manages them.
 
+SECRETS: It is an object that is used to create environment variables, check the 5th command.
+
+
 SERVICES: 
     There are 4 types of services
     1) ClusterIP
@@ -11,11 +14,26 @@ SERVICES:
     3) LoadBalancer
     4) Ingress
 
+1) ClusterIP: 
+    Exposes a pod to other pods, inside the kubernetes node. Pods can be routed to outside world through Ingress Nginx
+
 2) NODE_PORT: 
     Expose a pod to the outside world (only good for dev purposes)
 
+3) LoadBalancer: 
+    Legacy way to getting network traffic into a cluster. Only one pod can be routed to outside world.
+
 MASTER: 
     We interact with k8s with master, Master decides where to create the container (in which node). To deploy something, we update the desired state of the master with a config file. The master works constantly to meet your desired state
+
+VOLUMES: 
+    Persist data for containers. (will be lost if pod is deleted or created as another one)
+
+PERSISTENT_VOLUMES: 
+    Persistent volumes persist data for pods, (will not be lost if pod is deleted or created as another one)
+
+PERSISTENT_VOLUMES_CLAIM: 
+    It is like billboard, that tells what type of persistent volumes are available, that a pod can access from kubernetes
 
 /////////////////////////
 
@@ -32,3 +50,6 @@ kubectl set image <object_type>/<object_name> <container_name>=<new_image_to_use
 
 4) Connect local docker-cli with the docker-server that is running inside of any virtual machine (in current terminal window)
 eval $(minikube docker-env)
+
+5) Create a Secret
+kubectl create secret generic <secret_name> --from-literal key=value

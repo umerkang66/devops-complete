@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          # 2Gb storage is created by this claim, use this storage
+          # this send the request to k8s for storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            # Use the volume created by k8s, i.e. postgres-storage
+            - name: postgres-storage
+              # where inside the container this storage should be made available: the default file where postgres stores data
+              mountPath: /var/lib/postgresql/data
+              # postgres specific, store the db data inside postgres folder (inside the volume)
+              subPath: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD

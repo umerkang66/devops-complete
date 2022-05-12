@@ -1,0 +1,20 @@
+# volume claim is not actual instance of storage, it is something that we attach to a pod config, that will get the storage from kubernetes, whatever is specified
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-persistent-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # either it is provisioned ahead of time, or created on the fly
+      storage: 2Gi
+# NOTES
+# ReadWriteOnce: Can be used as a single node at a time
+
+# ReadOnlyMany: Multiple nodes an read from this
+
+# ReadWriteMany: Can be read and written to by many nodes
+
+# storage_class is automatically configured where the volume should be create on our computer we can get through "kubectl get storageclass", and on cloud providers it is different and automatically configured
