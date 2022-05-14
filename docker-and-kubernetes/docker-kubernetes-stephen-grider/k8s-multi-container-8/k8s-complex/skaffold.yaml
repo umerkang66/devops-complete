@@ -1,0 +1,39 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    # all the different images that skaffold will manage
+    - image: ugulzar4512/multi-client
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        # sync is telling to use mode number 2, mode 2 is to add the files in container, just like docker bind mount, mode 1 is rebuild the images
+        # if you see any js file change, add that into the container
+        # IMPORTANT!: if we made changes anything other than js,css,html file, the skaffold is going to jump to mode 1 (rebuild the images)
+        '**/*.js': .
+        '**/*.css': .
+        '**/*.html': .
+    - image: ugulzar4512/multi-server
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+    - image: ugulzar4512/multi-worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+deploy:
+  kubectl:
+    manifests:
+      # manage multi-client deployment through this config file, if detect any changes, inject that into client-deployment
+      - k8s/client-deployment.yaml
+      - k8s/server-deployment.yaml
+      - k8s/worker-deployment.yaml
+      - k8s/client-cluster-ip-service.yaml
+      - k8s/server-cluster-ip-service.yaml
