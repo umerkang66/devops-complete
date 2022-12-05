@@ -68,13 +68,21 @@ app.get('/people', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://localhost:27017/swfavorites',
+  // first is protocol, second is container-name that is joined by same network.
+  'mongodb://172.17.0.2:27017/swfavorites',
   { useNewUrlParser: true },
-  (err) => {
+  err => {
     if (err) {
       console.log(err);
     } else {
-      app.listen(3000);
+      app.listen(3000, () => console.log('App is listening on port 3000'));
     }
   }
 );
+
+// docker network create <network_name>
+// docker run -d --rm --network <network_name> --name <container_name> <image_name>
+
+// This is for host's localhost, it converts itself to the ip address of host machine
+// 'mongodb://host.docker.internal:27017'
+// 'mongodb://172.17.0.2:27017/swfavorites'
