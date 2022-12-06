@@ -15,7 +15,7 @@ export default function App() {
 
       try {
         // This "api" is coming from container name that are in the same network
-        const response = await fetch('http://api/goals');
+        const response = await fetch('/api/goals');
 
         const resData = await response.json();
 
@@ -41,7 +41,7 @@ export default function App() {
 
     try {
       // This "api" is coming from container name that are in the same network
-      const response = await fetch('http://api/goals', {
+      const response = await fetch('/api/goals', {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -81,7 +81,7 @@ export default function App() {
 
     try {
       // This "api" is coming from container name that are in the same network
-      const response = await fetch('http://api/goals/' + goalId, {
+      const response = await fetch('/api/goals/' + goalId, {
         method: 'DELETE',
       });
 

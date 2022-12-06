@@ -1,0 +1,12 @@
+BUILDING THE IMAGES:
+    docker network create complex-app-net
+    docker pull mongo
+    docker build -t api-image api
+    docker build -t client-image client
+    docker build -t nginx-image nginx
+
+RUNNING THE CONTAINERS
+    docker run -d --rm --name mongodb --network complex-app-net mongo
+    docker run -d --rm --name api --network complex-app-net api-image
+    docker run -d --rm -it --name client --network complex-app-net client-image
+    docker run -p 3005:80 -d --rm --name nginx --network complex-app-net nginx-image
