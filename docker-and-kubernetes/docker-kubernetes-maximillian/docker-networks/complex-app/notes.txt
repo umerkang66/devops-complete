@@ -5,7 +5,7 @@ BUILDING THE IMAGES:
     docker build -t client-image client
     docker build -t nginx-image nginx
 
-RUNNING THE CONTAINERS
+RUNNING THE CONTAINERS:
     docker run -d --rm --name mongodb --network complex-app-net mongo
     docker run -d --rm --name api --network complex-app-net api-image
     docker run -d --rm -it --name client --network complex-app-net client-image
