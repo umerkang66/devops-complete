@@ -4,21 +4,6 @@ import GoalInput from './components/goals/GoalInput';
 import CourseGoals from './components/goals/CourseGoals';
 import ErrorAlert from './components/UI/ErrorAlert';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,9 +15,7 @@ export default function App() {
 
       try {
         // This "api" is coming from container name that are in the same network
-        const response = await fetch(
-          'http://api/goals'
-        );
+        const response = await fetch('http://api/goals');
 
         const resData = await response.json();
 
@@ -58,18 +41,15 @@ export default function App() {
 
     try {
       // This "api" is coming from container name that are in the same network
-      const response = await fetch(
-        'http://api/goals',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            text: goalText,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await fetch('http://api/goals', {
+        method: 'POST',
+        body: JSON.stringify({
+          text: goalText,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       const resData = await response.json();
 
@@ -101,13 +81,9 @@ export default function App() {
 
     try {
       // This "api" is coming from container name that are in the same network
-      const response = await fetch(
-        'http://api/goals/' +
-          goalId,
-        {
-          method: 'DELETE',
-        }
-      );
+      const response = await fetch('http://api/goals/' + goalId, {
+        method: 'DELETE',
+      });
 
       const resData = await response.json();
 
