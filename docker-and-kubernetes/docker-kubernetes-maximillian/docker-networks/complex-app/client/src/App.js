@@ -108,6 +108,7 @@ export default function App() {
     <div>
       {error && <ErrorAlert errorText={error} />}
       <GoalInput onAddGoal={addGoalHandler} />
+      {isLoading && <div>Loading...</div>}
       {!isLoading && (
         <CourseGoals goals={loadedGoals} onDeleteGoal={deleteGoalHandler} />
       )}
