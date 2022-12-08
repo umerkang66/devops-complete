@@ -8,9 +8,7 @@ services:
       - ./env/mongo.env
 
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    build: ./api
     volumes:
       - logs:/app/logs
     env_file:
@@ -19,9 +17,7 @@ services:
       - mongodb
 
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    build: ./client
 
   nginx:
     build: ./nginx
