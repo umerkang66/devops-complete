@@ -83,20 +83,24 @@ app.delete('/goals/:id', async (req, res) => {
   }
 });
 
-mongoose.connect(
-  // <protocol>://<container_name>:<port>/<db_name>
-  'mongodb://mongodb:27017/course-goals',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  err => {
-    if (err) {
-      console.error('FAILED TO CONNECT TO MONGODB');
-      console.error(err);
-    } else {
-      console.log('CONNECTED TO MONGODB');
-      app.listen(3001);
-    }
+const MONGO_USER = process.env.MONGO_USER;
+const MONGO_PASS = process.env.MONGO_PASS;
+if (!MONGO_USER || !MONGO_PASS)
+  throw new Error('Mongo username or password is not defined');
+
+const start = async () => {
+  try {
+    await mongoose.connect(
+      // <protocol>://<container_name>:<port>/<db_name>
+      `mongodb://${MONGO_USER}:${MONGO_PASS}@mongodb:27017/course-goals?authSource=admin`
+    );
+
+    console.log('CONNECTED TO MONGODB');
+    app.listen(3001);
+  } catch (err) {
+    console.error('FAILED TO CONNECT TO MONGODB');
+    console.error(err);
   }
-);
+};
+
+start();

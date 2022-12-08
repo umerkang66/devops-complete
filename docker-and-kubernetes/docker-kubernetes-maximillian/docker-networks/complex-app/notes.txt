@@ -7,8 +7,8 @@ FOR DEVELOPMENT:
         docker build -t nginx-image nginx
 
     RUNNING THE CONTAINERS:
-        docker run -d --rm --name mongodb --network complex-app-net mongo
-        docker run -d --rm --name api --network complex-app-net api-image
+        docker run -d --rm --name mongodb -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=umer -e MONGO_INITDB_ROOT_PASSWORD=secret --network complex-app-net mongo
+        docker run -d --rm --name api -e MONGO_USER=umer -e MONGO_PASS=secret --network complex-app-net api-image
         docker run -d --rm -it --name client --network complex-app-net client-image
         docker run -p 3005:80 -d --rm --name nginx --network complex-app-net nginx-image
 
@@ -20,7 +20,7 @@ FOR PRODUCTION:
         docker build -t client-image client
         docker build -t nginx-image nginx
     RUNNING THE CONTAINERS:
-        docker run -d --rm --name mongodb --network complex-app-net mongo
-        docker run -d --rm --name api --network complex-app-net api-image
+        docker run -d --rm --name mongodb -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=umer -e MONGO_INITDB_ROOT_PASSWORD=secret --network complex-app-net mongo
+        docker run -d --rm --name api -e MONGO_USER=umer -e MONGO_PASS=secret --network complex-app-net api-image
         docker run -d --rm -it --name client --network complex-app-net client-image
         docker run -p 3005:80 -d --rm --name nginx --network complex-app-net nginx-image
