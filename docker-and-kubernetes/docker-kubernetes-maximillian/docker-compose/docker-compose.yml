@@ -5,7 +5,7 @@ services:
     volumes:
       - data:/data/db
     env_file:
-      - ./config.env
+      - ./env/mongo.env
 
   api:
     build:
@@ -16,7 +16,7 @@ services:
       - ./api:/app
       - /app/node_modules
     env_file:
-      - ./config.env
+      - ./env/api.env
     depends_on:
       - mongodb
 
