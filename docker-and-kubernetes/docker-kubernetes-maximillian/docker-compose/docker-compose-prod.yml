@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - data:/data/db
+    env_file:
+      - ./env/mongo.env
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - logs:/app/logs
+    env_file:
+      - ./env/api.env
+    depends_on:
+      - mongodb
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - api
+      - client
+
+volumes:
+  data:
+  logs:
