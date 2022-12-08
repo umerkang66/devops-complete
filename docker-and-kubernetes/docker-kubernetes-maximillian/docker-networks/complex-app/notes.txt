@@ -2,25 +2,40 @@ FOR DEVELOPMENT:
     BUILDING THE IMAGES:
         docker network create complex-app-net
         docker pull mongo
+
         docker build -t api-image -f api/Dockerfile.dev api
+
         docker build -t client-image -f client/Dockerfile.dev client
+
         docker build -t nginx-image nginx
 
     RUNNING THE CONTAINERS:
         docker run -d --rm --name mongodb -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=umer -e MONGO_INITDB_ROOT_PASSWORD=secret --network complex-app-net mongo
-        docker run -d --rm --name api -e MONGO_USER=umer -e MONGO_PASS=secret --network complex-app-net api-image
-        docker run -d --rm -it --name client --network complex-app-net client-image
+
+        docker run -d --rm --name api -e MONGO_USER=umer -e MONGO_PASS=secret -v logs:/app/logs -v "$(pwd)/api":/app -v /app/node_modules --network complex-app-net     api-image
+
+        docker run -d --rm -it --name client -v "$(pwd)/client":/app -v /app/node_modules --network complex-app-net client-image
+
         docker run -p 3005:80 -d --rm --name nginx --network complex-app-net nginx-image
+
 
 FOR PRODUCTION:
     BUILDING THE IMAGES:
         docker network create complex-app-net
+       
         docker pull mongo
+       
         docker build -t api-image api
+       
         docker build -t client-image client
+       
         docker build -t nginx-image nginx
+
     RUNNING THE CONTAINERS:
         docker run -d --rm --name mongodb -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=umer -e MONGO_INITDB_ROOT_PASSWORD=secret --network complex-app-net mongo
-        docker run -d --rm --name api -e MONGO_USER=umer -e MONGO_PASS=secret --network complex-app-net api-image
-        docker run -d --rm -it --name client --network complex-app-net client-image
+        
+        docker run -d --rm --name api -e MONGO_USER=umer -v logs:/app/logs -e MONGO_PASS=secret --network complex-app-net api-image
+        
+        docker run -d --rm --name client --network complex-app-net client-image
+        
         docker run -p 3005:80 -d --rm --name nginx --network complex-app-net nginx-image

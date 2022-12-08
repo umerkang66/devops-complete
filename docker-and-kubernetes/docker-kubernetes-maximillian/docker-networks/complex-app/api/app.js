@@ -90,8 +90,8 @@ if (!MONGO_USER || !MONGO_PASS)
 
 const start = async () => {
   try {
+    // <protocol>://<container_name>:<port>/<db_name>
     await mongoose.connect(
-      // <protocol>://<container_name>:<port>/<db_name>
       `mongodb://${MONGO_USER}:${MONGO_PASS}@mongodb:27017/course-goals?authSource=admin`
     );
 
