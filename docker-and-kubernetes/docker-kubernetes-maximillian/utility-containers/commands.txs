@@ -1,0 +1,5 @@
+DOCKERFILE:
+    docker run -it -v $(pwd):/app <our_image_name> <npm_command>
+
+DOCKER_COMPOSE:
+    # docker-compose run --rm <service_name> <npm_command_name>
