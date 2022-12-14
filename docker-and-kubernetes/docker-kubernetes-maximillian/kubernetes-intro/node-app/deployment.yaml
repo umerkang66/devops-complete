@@ -23,6 +23,8 @@ spec:
         # we can also add multiple containers
         - name: kube-app
           image: ugulzar4512/first-kube-app
+          # forcefully pull the latest image
+          imagePullPolicy: Always
           livenessProbe:
             # how k8s will know if this pod is live or not
             httpGet:
