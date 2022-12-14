@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # name of the deployment
+  name: kube-app-deployment
+spec:
+  # specification of this deployment
+  replicas: 1
+  selector:
+    # which pods in the cluster can be controlled by
+    # this deployment
+    matchLabels:
+      app: kube-app
+  template:
+    # configurations for the individual pod, that
+    # will be applied to all replicas of pod
+    metadata:
+      labels:
+        app: kube-app
+    spec:
+      # specifications for the indie pod
+      containers:
+        # we can also add multiple containers
+        - name: kube-app
+          image: ugulzar4512/first-kube-app
+          livenessProbe:
+            # how k8s will know if this pod is live or not
+            httpGet:
+              # path can be configured
+              path: /
+              port: 8080
+            # how often it should check
+            periodSeconds: 10
+            # how long k8s will wait for the first
+            # time to check for the liveness (so
+            # application can start in this time)
+            initialDelaySeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-app-srv
+spec:
+  selector:
+    # which pods should be controlled this service
+    # even they are created different deployments
+    app: kube-app
+  ports:
+    - protocol: TCP
+      # port expose to the other pods in the cluster
+      port: 80
+      # "port" is mapped to the "targetPort" inside the pod
+      targetPort: 8080
+  # LoadBalancer will also expose the port to host machine
+  type: LoadBalancer
