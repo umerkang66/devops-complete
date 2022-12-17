@@ -23,6 +23,17 @@ spec:
         # we can also add multiple containers
         - name: story
           image: ugulzar4512/story-kube-volume
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: '0.5'
+            requests:
+              memory: 256Mi
+              cpu: '0.2'
+      # volumes for the pod
+      volumes:
+        - name: story-volume
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -31,6 +42,7 @@ metadata:
 spec:
   selector:
     app: story-deployment
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 80
