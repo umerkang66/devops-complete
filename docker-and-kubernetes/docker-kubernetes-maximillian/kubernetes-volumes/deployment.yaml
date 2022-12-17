@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # name of the deployment
+  name: story-deployment
+spec:
+  # specification of this deployment
+  replicas: 1
+  selector:
+    # which pods in the cluster can be controlled by
+    # this deployment
+    matchLabels:
+      app: story-deployment
+  template:
+    # configurations for the individual pod, that
+    # will be applied to all replicas of pod
+    metadata:
+      labels:
+        app: story-deployment
+    spec:
+      # specifications for the indie pod
+      containers:
+        # we can also add multiple containers
+        - name: story
+          image: ugulzar4512/story-kube-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: story-service
+spec:
+  selector:
+    app: story-deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
