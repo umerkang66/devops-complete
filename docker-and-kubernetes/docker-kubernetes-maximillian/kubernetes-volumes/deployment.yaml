@@ -26,13 +26,16 @@ spec:
           resources:
             limits:
               memory: 256Mi
-              cpu: '0.5'
+              cpu: '0.2'
             requests:
               memory: 256Mi
               cpu: '0.2'
       # volumes for the pod
       volumes:
         - name: story-volume
+          # type of emptyDir, empty obj means its
+          # default settings
+          # if the pod is removed, this "dir" removed
           emptyDir: {}
 ---
 apiVersion: v1
