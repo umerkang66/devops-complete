@@ -23,6 +23,12 @@ spec:
         # we can also add multiple containers
         - name: story
           image: ugulzar4512/story-kube-volume
+          volumeMounts:
+            # mount the volume to this folder
+            - mountPath: /app/story
+              # name of the volume that we have
+              # defined below
+              name: story-volume
           resources:
             limits:
               memory: 256Mi
@@ -33,9 +39,11 @@ spec:
       # volumes for the pod
       volumes:
         - name: story-volume
-          # type of emptyDir, empty obj means its
+          # Type of emptyDir, empty obj means its
           # default settings
-          # if the pod is removed, this "dir" removed
+          # Ff the pod is removed, this "dir" removed
+          # But this will survive the container
+          # removal
           emptyDir: {}
 ---
 apiVersion: v1
