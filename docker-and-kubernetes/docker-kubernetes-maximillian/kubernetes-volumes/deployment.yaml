@@ -5,7 +5,7 @@ metadata:
   name: story-deployment
 spec:
   # specification of this deployment
-  replicas: 1
+  replicas: 3
   selector:
     # which pods in the cluster can be controlled by
     # this deployment
@@ -37,7 +37,15 @@ spec:
           # Ff the pod is removed, this "dir" removed
           # But this will survive the container
           # removal
-          emptyDir: {}
+          # emptyDir: {}
+
+          hostPath:
+            # volume in host machine (node), if there
+            # are multiple nodes, this doesn't work
+            # this "path" is path to host machine
+            path: /data
+            # it should be existing dir, or you can create it
+            type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service

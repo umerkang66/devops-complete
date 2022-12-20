@@ -41,3 +41,5 @@ app.listen(3000, () => console.log('App is listening on port 3000'));
 // curl -X POST -H "Content-Type: application/json" -d '{"text": "umer did this"}' http://192.168.49.2:31167/story
 
 // curl http://192.168.49.2:31167/story
+
+// curl http://192.168.49.2:31167/error
