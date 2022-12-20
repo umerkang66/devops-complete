@@ -29,13 +29,6 @@ spec:
               # name of the volume that we have
               # defined below
               name: story-volume
-          resources:
-            limits:
-              memory: 256Mi
-              cpu: '0.2'
-            requests:
-              memory: 256Mi
-              cpu: '0.2'
       # volumes for the pod
       volumes:
         - name: story-volume
