@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: story-pvc
+spec:
+  # which persistent volumes we want to claim

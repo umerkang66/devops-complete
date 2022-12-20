@@ -1,0 +1,23 @@
+# This will be created detached from any, node, but in cluster
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: story-pv
+spec:
+  capacity:
+    storage: 1Gi
+  # Filesystem or block
+  volumeMode: Filesystem
+  accessModes:
+    # what should be allowed, we use it, when we claim it inside the pod
+    # multiple pods, but they all have to be on same node
+    - ReadWriteOnce
+    # it is readonly, but can be claimed by multiple nodes, not available on different node
+    # - ReadOnlyMany
+    # not available on different node
+    # - ReadWriteMany
+  # hostPath is a type of "pv", that only works if
+  # there is a single node (means in development)
+  hostPath:
+    path: /data
+    type: DirectoryOrCreate
