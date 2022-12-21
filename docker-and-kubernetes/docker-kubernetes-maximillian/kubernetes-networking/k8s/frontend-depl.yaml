@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        # both of these containers will be in the same pod
+        - name: frontend
+          image: ugulzar4512/task-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-srv
+spec:
+  selector:
+    # select all the pods with the label "app:frontend"
+    app: frontend
+  # LB creates an automatic ip address, and it also
+  # distributes the requests, to all the pods, (even
+  # on multiple nodes)
+  # Ip address is also independent to the node, but in NodePort, ip address is dependent to the node
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      # outside facing port on this service ip address
+      port: 80
+      # it is the port inside of the pod (or container)
+      targetPort: 80

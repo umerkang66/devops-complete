@@ -42,7 +42,7 @@ spec:
   # distributes the requests, to all the pods, (even
   # on multiple nodes)
   # Ip address is also independent to the node, but in NodePort, ip address is dependent to the node
-  type: LoadBalancer
+  type: ClusterIP # LoadBalancer
   ports:
     - protocol: TCP
       # outside facing port on this service ip address
