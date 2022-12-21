@@ -15,4 +15,5 @@ services:
       - '8000:8000'
     environment:
       - AUTH_ADDRESS=auth
+        # this folder should be present in the tasks-api container
       - TASKS_FOLDER=tasks

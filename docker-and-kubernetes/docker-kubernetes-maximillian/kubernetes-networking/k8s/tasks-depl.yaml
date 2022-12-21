@@ -27,6 +27,7 @@ spec:
               # in case of default remove the namespace
               value: auth-srv
             - name: TASKS_FOLDER
+              # this folder should be present in the tasks-api container
               value: tasks
 ---
 apiVersion: v1
