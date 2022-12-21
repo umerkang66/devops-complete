@@ -39,13 +39,17 @@ spec:
           # removal
           # emptyDir: {}
 
-          hostPath:
-            # volume in host machine (node), if there
-            # are multiple nodes, this doesn't work
-            # this "path" is path to host machine
-            path: /data
-            # it should be existing dir, or you can create it
-            type: DirectoryOrCreate
+          # hostPath:
+          # volume in host machine (node), if there
+          # are multiple nodes, this doesn't work
+          # this "path" is path to host machine
+          # path: /data
+          # it should be existing dir, or you can create it
+          # type: DirectoryOrCreate
+
+          # now the volume type is "persistentVolumeClaim"
+          persistentVolumeClaim:
+            claimName: story-pvc
 ---
 apiVersion: v1
 kind: Service

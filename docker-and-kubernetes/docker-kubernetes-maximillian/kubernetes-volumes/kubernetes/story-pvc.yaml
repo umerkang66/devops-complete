@@ -4,3 +4,12 @@ metadata:
   name: story-pvc
 spec:
   # which persistent volumes we want to claim
+  volumeName: story-pv
+  accessModes:
+    # for host path only supported is this, check the "story-pv"
+    - ReadWriteOnce
+  storageClassName: standard # kubectl get sc
+  resources:
+    requests:
+      # 1Gi is total, we can also request less
+      storage: 1Gi

@@ -8,6 +8,7 @@ spec:
     storage: 1Gi
   # Filesystem or block
   volumeMode: Filesystem
+  storageClassName: standard # kubectl get sc
   accessModes:
     # what should be allowed, we use it, when we claim it inside the pod
     # multiple pods, but they all have to be on same node
