@@ -22,7 +22,18 @@ spec:
       containers:
         # we can also add multiple containers
         - name: story
-          image: ugulzar4512/story-kube-volume
+          image: ugulzar4512/story-kube-volume:2
+          env:
+            # "name" will become process.env.STORY_FOLDER
+            - name: STORY_FOLDER
+              # value: 'story'
+              valueFrom:
+                configMapKeyRef:
+                  # name of the config map
+                  name: story-environments
+                  # this "folder" is coming from
+                  # configMap file
+                  key: folder
           volumeMounts:
             # mount the volume to this folder
             - mountPath: /app/story

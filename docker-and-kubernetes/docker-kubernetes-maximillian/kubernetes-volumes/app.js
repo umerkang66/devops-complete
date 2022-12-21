@@ -6,7 +6,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const filePath = path.join(__dirname, 'story', 'text.txt');
+if (!process.env.STORY_FOLDER) throw new Error('STORY_FOLDER IS NOT DEFINED');
+
+const filePath = path.join(__dirname, process.env.STORY_FOLDER, 'text.txt');
 
 app.use(bodyParser.json());
 
@@ -38,8 +40,8 @@ app.get('/error', (req, res) => {
 
 app.listen(3000, () => console.log('App is listening on port 3000'));
 
-// curl -X POST -H "Content-Type: application/json" -d '{"text": "umer did this"}' http://192.168.49.2:31358/story
+// curl -X POST -H "Content-Type: application/json" -d '{"text": "umer did this"}' http://192.168.49.2:30905/story
 
-// curl http://192.168.49.2:31358/story
+// curl http://192.168.49.2:30905/story
 
-// curl http://192.168.49.2:31358/error
+// curl http://192.168.49.2:30905/error
