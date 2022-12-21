@@ -23,8 +23,9 @@ app.post('/signup', async (req, res) => {
   }
 
   try {
-    // const hashedPW = await axios.get('http://auth/hashed-password/' + password);
-    const hashedPW = 'dummyHashedPassword';
+    const hashedPW = await axios.get(
+      `http://${process.env.AUTH_ADDRESS}/hashed-password/` + password
+    );
 
     // since it's a dummy service, we don't really care for the hashed-pw either
     console.log(hashedPW, email);
@@ -56,10 +57,14 @@ app.post('/login', async (req, res) => {
   // normally, we'd find a user by email and grab his/ her ID and hashed password
   const hashedPassword = password + '_hash';
 
-  // const response = await axios.get(
-  //   'http://auth/token/' + hashedPassword + '/' + password
-  // );
-  const response = { status: 200, data: { token: 'abc' } };
+  // process.env.AUTH_SRV_SERVICE_SERVICE_HOST, this is a env variables with value as "ip address" to "auth service"
+
+  const response = await axios.get(
+    `http://${process.env.AUTH_ADDRESS}/token/` +
+      hashedPassword +
+      '/' +
+      password
+  );
 
   if (response.status === 200) {
     return res.status(200).json({ token: response.data.token });
@@ -67,4 +72,4 @@ app.post('/login', async (req, res) => {
   return res.status(response.status).json({ message: 'Logging in failed!' });
 });
 
-app.listen(8080);
+app.listen(8080, () => console.log('Users app is listening on port 8080'));

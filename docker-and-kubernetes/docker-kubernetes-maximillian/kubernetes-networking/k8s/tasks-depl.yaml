@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-depl
+  name: tasks-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: tasks
   template:
     metadata:
       labels:
-        app: users
+        app: tasks
     spec:
       containers:
         # both of these containers will be in the same pod
-        - name: users
-          image: ugulzar4512/task-users
+        - name: tasks
+          image: ugulzar4512/task-tasks
           env:
             # in the same pod, we can access other containers through "localhost"
             # "auth-srv" is the name of the service of auth-depl
@@ -26,15 +26,17 @@ spec:
               # <service_name>.<namespace>
               # in case of default remove the namespace
               value: auth-srv
+            - name: TASKS_FOLDER
+              value: tasks
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-srv
+  name: tasks-srv
 spec:
   selector:
-    # select all the pods with the label "app:users"
-    app: users
+    # select all the pods with the label "app:tasks"
+    app: tasks
   # LB creates an automatic ip address, and it also
   # distributes the requests, to all the pods, (even
   # on multiple nodes)
@@ -43,6 +45,6 @@ spec:
   ports:
     - protocol: TCP
       # outside facing port on this service ip address
-      port: 8080
+      port: 8000
       # it is the port inside of the pod (or container)
-      targetPort: 8080
+      targetPort: 8000

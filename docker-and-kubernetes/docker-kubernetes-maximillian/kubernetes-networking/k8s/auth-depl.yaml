@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        # both of these containers will be in the same pod
+        - name: auth
+          image: ugulzar4512/task-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srv
+spec:
+  selector:
+    # select all the pods with the label "app:auth"
+    app: auth
+  # only other pods can access it, through the "port"
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      # outside facing port on this service ip address
+      port: 80
+      # it is the port inside of the pod (or container)
+      targetPort: 80
